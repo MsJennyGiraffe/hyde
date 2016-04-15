@@ -1,0 +1,17 @@
+<html>
+  <head><title> <%= title %> </title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+  </head>
+
+
+  <body>
+
+    <%= html %>
+    <br><br>
+    <hr>
+    <% for link in tagfile_links %>
+    <%= link %><br>
+    <% end %>
+
+  </body>
+</html>

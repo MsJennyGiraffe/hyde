@@ -1,14 +1,27 @@
 #!/usr/bin/env ruby
+require './lib/file_maker'
+require './lib/file_converter'
+require './lib/post'
+require './lib/watch_fs'
 
 args = ARGV
 puts "You ran Hyde with these arguments: #{args}"
 
-# path = ARGV[1]
-
-# if ARGV[0] == "new"
-  #we want to build the (new) base structure.
-  #FileMaker.new.build(path) ?
-# if ARGV[0] == "build"
- # we want to go through all folders and files and make sure everything is converted to HTML from source to _output
-# if ARGV[0] == "post"
- # creates a new post in the path
+case ARGV[0]
+  when "new"
+    filemaker = FileMaker.new
+    filemaker.create_dir(ARGV[1])
+    filemaker.create_dir_structure(ARGV[1])
+    filemaker.create_file_structure(ARGV[1])
+  when "build"
+    fileconverter = FileConverter.new
+    fileconverter.markdown_to_html(ARGV[1])
+    fileconverter.md_to_html(ARGV[1])
+  when "post"
+    argv0, argv1, *argv2 = ARGV
+    new_post = Post.new
+    new_post.post(ARGV[1], argv2.join("_"))
+  when "watchfs"
+    # require 'pry' ; binding.pry
+    WatchFs.new.start_listening(ARGV[1])
+  end
